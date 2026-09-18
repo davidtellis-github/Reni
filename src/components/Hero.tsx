@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { imageUrl } from "@/lib/supabase";
 
 export default function Hero({ headline, images }: { headline: string; images: string[] }) {
@@ -14,7 +15,11 @@ export default function Hero({ headline, images }: { headline: string; images: s
   return (
     <section className={`hero ${photo ? "photo" : ""}`} id="hero">
       {photo ? <>
-        {images.map((p, k) => <div key={p} className={`slide ${k === i ? "on" : ""}`} style={{ backgroundImage: `url('${imageUrl(p)}')` }} />)}
+        {images.map((p, k) => (
+          <div key={p} className={`slide ${k === i ? "on" : ""}`}>
+            <Image src={imageUrl(p)} alt="" fill sizes="100vw" priority={k === 0} style={{ objectFit: "cover" }} />
+          </div>
+        ))}
         <div className="scrim" />
       </> : <div className="media ph" />}
       <div className="content"><h1 className="display">{headline}</h1></div>

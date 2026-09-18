@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getProducts, getSettings } from "@/lib/data";
 import { imageUrl } from "@/lib/supabase";
 import CartDrawer from "@/components/CartDrawer";
@@ -12,11 +13,17 @@ export default async function About() {
   const paras = c.about_body.split(/\n\s*\n/).filter(Boolean);
   return (<>
     <section className="aboutpg wrap">
-      <div className="strip">{(ids.length ? ids : shapes.slice(0, 6)).map((id, i) => <div key={id + i} className={`ph ${shapes[i % shapes.length]}`} style={ids.length ? { backgroundImage: `url('${imageUrl(id)}')` } : undefined} />)}</div>
+      <div className="strip">{(ids.length ? ids : shapes.slice(0, 6)).map((id, i) => (
+        <div key={id + i} className={`ph ${shapes[i % shapes.length]}`}>
+          {ids.length > 0 && <Image src={imageUrl(id)} alt="" fill sizes="190px" style={{ objectFit: "cover" }} />}
+        </div>
+      ))}</div>
       <p className="intro">{c.about_lead}</p>
       <div className="grid">
         <h1>{c.about_heading}</h1>
-        <div className="portrait" style={c.about_image ? { backgroundImage: `url('${imageUrl(c.about_image)}')` } : undefined} />
+        <div className="portrait">
+          {c.about_image && <Image src={imageUrl(c.about_image)} alt="" fill sizes="(max-width: 900px) 100vw, 33vw" style={{ objectFit: "cover" }} />}
+        </div>
         <div className="copy">{paras.map((t, i) => <p key={i}>{t}</p>)}<Link className="btn" href="/#shop">See the pieces</Link><div className="small muted" style={{ marginTop: 22 }}>Since {c.since_year}</div></div>
       </div>
     </section>

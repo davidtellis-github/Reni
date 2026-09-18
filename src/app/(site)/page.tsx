@@ -15,8 +15,8 @@ export default async function Home() {
     </section>
     <section className="how" id="how"><div className="wrap"><ol>
       <li><b>Choose a piece</b><span>Add it to your bag. Stock counts are live, and made-to-order pieces show their lead time.</span></li>
-      <li><b>Pay by UPI</b><span>Scan the QR or tap to open your UPI app. Then paste the 12-digit UTR from the payment receipt.</span></li>
-      <li><b>We confirm and make it</b><span>Payment is checked by hand, usually within a day. You get an order number to track status.</span></li>
+      <li><b>Pay securely</b><span>Checkout with Razorpay — card, UPI, netbanking or wallet.</span></li>
+      <li><b>We make it</b><span>Payment is verified instantly. You get an order number to track status.</span></li>
     </ol></div></section>
     <CartDrawer products={products} settings={c} />
   </>);

@@ -12,8 +12,8 @@ export default async function SettingsPage() {
     <H t="HERO" /><F k="hero_headline" label="Headline" />
     <H t="ABOUT" /><F k="about_lead" label="Intro sentence (under the photo strip)" area /><F k="about_heading" label="Big heading" /><F k="about_body" label="Body — blank line between paragraphs" area />
     <p className="small muted">The photo strip on the About page is built from your product and hero photos automatically.</p>
-    <H t="PAYMENT & CONTACT" /><F k="upi_id" label="UPI ID (customers pay here)" ph="name@bank" /><F k="payee_name" label="Payee name (shown in UPI app)" />
-    <F k="shipping_note" label="Shipping note" /><F k="contact_email" label="Contact email" /><F k="instagram" label="Instagram handle" />
+    <H t="SHIPPING & CONTACT" /><F k="shipping_note" label="Shipping note" /><F k="contact_email" label="Contact email" /><F k="instagram" label="Instagram handle" />
+    <p className="small muted">Payments run through Razorpay, configured via the RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET environment variables — not here.</p>
     <button className="btn" style={{ marginTop: 8 }}>Save settings</button>
   </div><div>
     <div className="field"><span>Hero photos (rotate every 5 s)</span><ImageUploader name="hero_images" initial={c.hero_images} hero /></div>

@@ -10,8 +10,6 @@ create table if not exists settings (
   about_heading text default '',
   about_body text default '',
   about_image text default '',
-  upi_id text not null default '',
-  payee_name text default 'Knotforaverage',
   contact_email text default '',
   instagram text default '',
   shipping_note text default 'Ships within India. Delivery charge included in the price.'
@@ -39,10 +37,10 @@ create table if not exists products (
 
 create table if not exists orders (
   id text primary key,                        -- short public order number
-  status text not null default 'awaiting_verification'
+  status text not null default 'confirmed'
     check (status in ('awaiting_verification','confirmed','shipped','rejected')),
-  utr text not null,
-  upi_id text not null,
+  razorpay_order_id text,
+  razorpay_payment_id text,
   total integer not null,
   items jsonb not null,                       -- [{product_id,name,price,qty,made_to_order}]
   customer jsonb not null,                    -- {name,phone,email,address,note}

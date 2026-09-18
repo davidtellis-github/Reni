@@ -1,6 +1,6 @@
 # Knotforaverage — store + studio portal
 
-Next.js 15 (App Router, TypeScript) · Supabase (Postgres + Storage) · UPI payment with manual UTR verification.
+Next.js 15 (App Router, TypeScript) · Supabase (Postgres + Storage) · Razorpay checkout.
 
 ## 1. Supabase
 1. Create a project at supabase.com.
@@ -8,19 +8,23 @@ Next.js 15 (App Router, TypeScript) · Supabase (Postgres + Storage) · UPI paym
 3. Storage → New bucket → name `images`, tick **Public**.
 4. Project settings → API: copy the URL, `anon` key and `service_role` key.
 
-## 2. Local run
+## 2. Razorpay
+1. Create an account at razorpay.com (test mode is fine for development).
+2. Dashboard → Settings → API Keys → generate a Key ID + Key Secret.
+
+## 3. Local run
 ```bash
-cp .env.example .env.local   # fill in the four values
+cp .env.example .env.local   # fill in Supabase + Razorpay values
 npm install
 npm run dev                  # http://localhost:3000
 ```
-Open `/admin` → Settings → set the UPI ID and payee name first. Then add pieces.
+Open `/admin` → Settings to set brand, hero, and about copy. Then add pieces.
 
-## 3. Deploy (Vercel)
-Import the repo, add the same four env vars, deploy. Set `ADMIN_PASSWORD` — with it unset the studio is open to the internet.
+## 4. Deploy (Vercel)
+Import the repo, add the same env vars, deploy. Set `ADMIN_PASSWORD` — with it unset the studio is open to the internet.
 
 ## How money moves
-Customer pays your UPI ID directly (QR / deep link). They enter the 12-digit UTR; the order is saved as *awaiting verification*. You check the UTR in your UPI app, then confirm in Studio → Orders. Confirming decrements stock atomically via the `adjust_stock` SQL function. Nothing is verified automatically — that needs a gateway (Razorpay/Cashfree) and is a later step.
+At checkout the server creates a Razorpay order (`RAZORPAY_KEY_ID`/`RAZORPAY_KEY_SECRET`), then Razorpay's own checkout modal collects payment (cards, UPI, netbanking, wallets). On success the browser sends back `razorpay_order_id` / `razorpay_payment_id` / `razorpay_signature`, and the server re-derives the HMAC signature from the key secret to confirm the payment is genuine before writing the order — so a customer can't fake a paid order client-side. Verified orders are saved as *confirmed* immediately and stock is decremented atomically via the `adjust_stock` SQL function. Studio → Orders can still move an order to *shipped* or *rejected* (rejecting restocks it).
 
 ## Layout
 ```

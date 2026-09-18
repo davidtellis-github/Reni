@@ -14,8 +14,9 @@ export function adminClient() {
   return createClient(url, key, { auth: { persistSession: false } });
 }
 
-/** Public URL for a storage path in the "images" bucket. */
+/** Public URL for a storage path in the "images" bucket, or a local /public path as-is. */
 export function imageUrl(path: string | undefined | null) {
   if (!path) return "";
+  if (path.startsWith("/") || path.startsWith("http")) return path;
   return `${url}/storage/v1/object/public/images/${path}`;
 }

@@ -28,7 +28,7 @@ export default function CartDrawer({ products, settings }: { products: Product[]
       }) : <p className="muted">Your bag is empty.</p>}</div>
       <div className="foot"><div className="total"><span>Total</span><span>{inr(total)}</span></div>
         <p className="small muted" style={{ margin: "0 0 12px" }}>{settings.shipping_note}</p>
-        <button className="btn" style={{ width: "100%", justifyContent: "center" }} disabled={!lines.length} onClick={() => setCheckout(true)}>Pay by UPI</button></div>
+        <button className="btn" style={{ width: "100%", justifyContent: "center" }} disabled={!lines.length} onClick={() => setCheckout(true)}>Checkout</button></div>
     </aside>
   </>);
 }

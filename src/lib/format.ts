@@ -10,11 +10,6 @@ export function availability(p: Pick<Product, "stock" | "made_to_order" | "lead_
   return { ok: true, label: s === 1 ? "Only 1 available" : `${s} available`, tag: s <= 2 ? `Only ${s} left` : "", out: false };
 }
 
-export function upiLink(upiId: string, payee: string, amount: number, orderId: string) {
-  const q = new URLSearchParams({ pa: upiId, pn: payee, am: amount.toFixed(2), cu: "INR", tn: `Order ${orderId}` });
-  return `upi://pay?${q.toString()}`;
-}
-
 export const slugify = (s: string) =>
   s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "").slice(0, 60) || "piece";
 
